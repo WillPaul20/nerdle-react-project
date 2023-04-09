@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useContext, useEffect } from "react";
+import { AppContext } from "../App";
+
 
 function Letter({letterPosition, attemptValue}) {
+
+  const { board } = useContext(AppContext);
+  const letter = board[attemptValue][letterPosition];
+
   return (
-    <div>Letter</div>
+    <div className='letter'>
+      {letter}
+    </div>
   )
 }
 
