@@ -1,9 +1,8 @@
 .App {
     text-align: center;
-    background-color: #121212;
+    background-color: #121111;
     width: 100vw;
     height: 100vh;
-    /* display: flex; */
     color: white;
   }
   
@@ -15,7 +14,6 @@
   nav {
     height: 60px;
     width: 100%;
-    margin: 0;
     border-bottom: 1px solid grey;
     display: grid;
     place-items: center;
@@ -32,14 +30,13 @@
     height: calc(100vh - 170px);
     display: flex;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 30px;
     flex-direction: column;
   }
   
   .board {
     width: 450px;
     height: 550px;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
   }
@@ -54,7 +51,7 @@
   .letter {
     flex: 33%;
     height: 100%;
-    border: 1px solid grey;
+    border: 1px solid white;
     margin: 5px;
     display: grid;
     place-items: center;
@@ -65,11 +62,11 @@
   }
   
   #correct {
-    background-color: #528d4e;
+    background-color: #35ae2d;
   }
   
   #almost {
-    background-color: #b49f39;
+    background-color: #c8ab1d;
   }
   
   #error {
@@ -79,10 +76,10 @@
   .keyboard {
     width: 700px;
     height: 300px;
-    margin-top: 60px;
+    margin-top: 30px;
   }
   
-  .line1 {
+  .keyRow1 {
     flex: 33%;
     display: flex;
     flex-direction: row;
@@ -90,14 +87,14 @@
     justify-content: center;
     margin: 5px;
   }
-  .line2 {
+  .keyRow2 {
     flex: 33%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin: 5px;
   }
-  .line3 {
+  .keyRow3 {
     flex: 33%;
     display: flex;
     flex-direction: row;
