@@ -22,9 +22,6 @@ function App() {
 		guessedWord: false,
 	});
 
-	//! THIS IS A TESTING SOLUTION. DATABASE CONNECTION IS NOT YET IMPLEMENTED
-	// const solution = "RATION";
-
 	useEffect(() => {
 		wordSetGenerator().then((words) => {
 			setSolutionSet(words.wordSet);
@@ -51,12 +48,12 @@ function App() {
 			alert("Word Not Found!");
 		}
 
-		if (currentWord.toLowerCase() === solution.toLowerCase()) {
+		if (currentWord === solution) {
 			setGameOver({ isGameOver: true, guessedWord: true });
 			return;
 		}
 
-		if (attempt.attemptNumber === 6) {
+		if (attempt.attemptNumber === 5) {
 			setGameOver({ isGameOver: true, guessedWord: false });
 			return;
 		}
@@ -114,7 +111,8 @@ function App() {
 			>
 				<div className='game'>
 					<Board />
-					{gameOver.gameOver ? <GameOver /> : <Keyboard />}
+					{gameOver.isGameOver ? <GameOver /> : <Keyboard />}
+					{/* {gameOver.isGameOver ? alert("GAME OVER") : <Keyboard />} */}
 				</div>
 			</AppContext.Provider>
 		</div>

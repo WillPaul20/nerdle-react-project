@@ -115,6 +115,13 @@
     font-family: Arial, Helvetica, sans-serif;
     cursor: pointer;
   }
+
+  .gameOver {
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    font-size: 16px;
+  }
   
   #wide-key {
     width: 100px;
