@@ -1,6 +1,7 @@
 import "./App.css";
 import Board from "./components/Board";
 import Keyboard from "./components/Keyboard";
+import GameOver from "./components/GameOver";
 import React, { createContext, useEffect, useState } from "react";
 import { boardDefault, wordSetGenerator } from "./Words";
 
@@ -13,15 +14,21 @@ function App() {
 		attemptNumber: 0,
 		letterPosition: 0,
 	});
-	const [solutionSet, setSolution] = useState(new Set());
-  const [disabled, setDisabled] = useState([]);
+	const [solutionSet, setSolutionSet] = useState(new Set());
+	const [disabled, setDisabled] = useState([]);
+  const [solution, setSolution] = useState("")
+	const [gameOver, setGameOver] = useState({
+		isGameOver: false,
+		guessedWord: false,
+	});
 
 	//! THIS IS A TESTING SOLUTION. DATABASE CONNECTION IS NOT YET IMPLEMENTED
-	const solution = "RATION";
+	// const solution = "RATION";
 
 	useEffect(() => {
 		wordSetGenerator().then((words) => {
-			setSolution(words.wordSet);
+			setSolutionSet(words.wordSet);
+      setSolution(words.todaysWord);
 		});
 	}, []);
 
@@ -44,9 +51,15 @@ function App() {
 			alert("Word Not Found!");
 		}
 
-    // if (currentWord === correctWord) {
-    //   alert("You Win!");
-    // }
+		if (currentWord.toLowerCase() === solution.toLowerCase()) {
+			setGameOver({ isGameOver: true, guessedWord: true });
+			return;
+		}
+
+		if (attempt.attemptNumber === 6) {
+			setGameOver({ isGameOver: true, guessedWord: false });
+			return;
+		}
 	};
 
 	const onDelete = () => {
@@ -90,14 +103,18 @@ function App() {
 					onDelete,
 					onEnter,
 					onLetterSelect,
-					solution,
-          disabled,
-          setDisabled,
+					solutionSet,
+					disabled,
+					setDisabled,
+					gameOver,
+					setGameOver,
+          solution,
+          setSolution
 				}}
 			>
 				<div className='game'>
 					<Board />
-					<Keyboard />
+					{gameOver.gameOver ? <GameOver /> : <Keyboard />}
 				</div>
 			</AppContext.Provider>
 		</div>
