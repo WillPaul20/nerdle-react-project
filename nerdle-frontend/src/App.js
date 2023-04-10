@@ -1,8 +1,8 @@
 import "./App.css";
 import Board from "./components/Board";
 import Keyboard from "./components/Keyboard";
-import React, { createContext, useState } from "react";
-import { boardDefault } from "./Words";
+import React, { createContext, useEffect, useState } from "react";
+import { boardDefault, wordSetGenerator } from "./Words";
 
 // Allow states to be passed throughout the application using context API
 export const AppContext = createContext();
@@ -13,12 +13,40 @@ function App() {
 		attemptNumber: 0,
 		letterPosition: 0,
 	});
+	const [solutionSet, setSolution] = useState(new Set());
+  const [disabled, setDisabled] = useState([]);
+
+	//! THIS IS A TESTING SOLUTION. DATABASE CONNECTION IS NOT YET IMPLEMENTED
+	const solution = "RATION";
+
+	useEffect(() => {
+		wordSetGenerator().then((words) => {
+			setSolution(words.wordSet);
+		});
+	}, []);
 
 	const onEnter = () => {
 		// If the letter position is not 6, end the function
 		if (attempt.letterPosition !== 6) return;
-		// Set the attempt number to the next attempt and the letter position to 0
-		setAttempt({ attemptNumber: attempt.attemptNumber + 1, letterPosition: 0 });
+
+		let currentWord = "";
+		for (let i = 0; i < 6; i++) {
+			currentWord += board[attempt.attemptNumber][i];
+		}
+
+		if (solutionSet.has(currentWord.toLowerCase())) {
+			// Set the attempt number to the next attempt and the letter position to 0
+			setAttempt({
+				attemptNumber: attempt.attemptNumber + 1,
+				letterPosition: 0,
+			});
+		} else {
+			alert("Word Not Found!");
+		}
+
+    // if (currentWord === correctWord) {
+    //   alert("You Win!");
+    // }
 	};
 
 	const onDelete = () => {
@@ -62,6 +90,9 @@ function App() {
 					onDelete,
 					onEnter,
 					onLetterSelect,
+					solution,
+          disabled,
+          setDisabled,
 				}}
 			>
 				<div className='game'>

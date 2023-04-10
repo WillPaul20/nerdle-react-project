@@ -4,14 +4,12 @@ import { AppContext } from "../App";
 
 function Keyboard() {
 	// Load the context
-	const { onEnter, onDelete, onLetterSelect } = useContext(AppContext);
+	const { onEnter, onDelete, onLetterSelect, disabled } = useContext(AppContext);
 
 	// We create a keyboard with the following keys:
 	const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
 	const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
 	const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
-
-	//TODO: Fix Keyboard keypresses not moving to next attempt
 
 	// We create a function that will handle the key press
 	const handleKeyPress = useCallback((event) => {
@@ -48,24 +46,24 @@ function Keyboard() {
 		return () => {
 			document.removeEventListener("keydown", handleKeyPress);
 		};
-	}, handleKeyPress);
+	}, [handleKeyPress]);
 
 	return (
 		<div className='keyboard' onKeyDown={handleKeyPress}>
 			<div className='keyRow1'>
 				{keys1.map((key) => {
-					return <Key keyValue={key} />;
+					return <Key keyValue={key} disabledKey={disabled.includes(key)}/>;
 				})}
 			</div>
 			<div className='keyRow2'>
 				{keys2.map((key) => {
-					return <Key keyValue={key} />;
+					return <Key keyValue={key} disabledKey={disabled.includes(key)}/>;
 				})}
 			</div>
 			<div className='keyRow3'>
 				<Key keyValue={"ENTER"} bigKey />
 				{keys3.map((key) => {
-					return <Key keyValue={key} />;
+					return <Key keyValue={key} disabledKey={disabled.includes(key)}/>;
 				})}
 				<Key keyValue={"DELETE"} bigKey />
 			</div>

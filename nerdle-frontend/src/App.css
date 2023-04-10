@@ -61,15 +61,15 @@
     font-family: Arial, Helvetica, sans-serif;
   }
   
-  #correct {
+  #correct-letter {
     background-color: #35ae2d;
   }
   
-  #almost {
+  #incorrect-location {
     background-color: #c8ab1d;
   }
   
-  #error {
+  #default {
     background-color: #3a393c;
   }
   
@@ -116,9 +116,9 @@
     cursor: pointer;
   }
   
-  #big {
+  #wide-key {
     width: 100px;
   }
-  #disabled {
+  #disabled-key {
     background-color: #3a393c;
   }
