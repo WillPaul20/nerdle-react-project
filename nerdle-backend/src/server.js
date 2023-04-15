@@ -9,14 +9,18 @@ dotenv.config()
 
 mongoose.connect(process.env.MONGO_CONNECT +'/nerdleDB');
 
+
 const app = express()
 const port = 8000
 
 app.use(cors());
 //here is a change
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, '../build')));
 
-
+app.get(/^(?!\/api).+/, (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'))
+  });
 
 const connectDB = async () => {
     try {
