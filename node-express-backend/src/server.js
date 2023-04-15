@@ -37,7 +37,7 @@ app.get('/api/getRandomWord', async (req, res) => {
 
     const db = client.db('NerdleDB');
 
-    const collection = db.collection('nerdle');
+    const collection = db.collection('nerdle'); 
 
     console.log("Connected to nerdleDB");
     console.log("Getting random word");
