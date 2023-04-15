@@ -50,7 +50,7 @@ function App() {
 			alert("Word Not Found!");
 		}
 
-		if (currentWord === solution) {
+		if (currentWord.toLowerCase() === solution) {
 			setGameOver({ isGameOver: true, guessedWord: true });
 			return;
 		}
