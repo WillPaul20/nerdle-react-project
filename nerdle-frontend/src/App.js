@@ -4,6 +4,7 @@ import Keyboard from "./components/Keyboard";
 import GameOver from "./components/GameOver";
 import React, { createContext, useEffect, useState } from "react";
 import { boardDefault, wordSetGenerator } from "./Words";
+import StatisticsButton from "./components/StatisticsButton";
 
 // Allow states to be passed throughout the application using context API
 export const AppContext = createContext();
@@ -16,16 +17,17 @@ function App() {
 	});
 	const [solutionSet, setSolutionSet] = useState(new Set());
 	const [disabled, setDisabled] = useState([]);
-  const [solution, setSolution] = useState("")
+	const [solution, setSolution] = useState("");
 	const [gameOver, setGameOver] = useState({
 		isGameOver: false,
 		guessedWord: false,
 	});
+	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
 		wordSetGenerator().then((words) => {
 			setSolutionSet(words.wordSet);
-      setSolution(words.todaysWord);
+			setSolution(words.todaysWord);
 		});
 	}, []);
 
@@ -84,35 +86,38 @@ function App() {
 		// Set the attempt letter position to the next letter
 		setAttempt({ ...attempt, letterPosition: attempt.letterPosition + 1 });
 	};
-
 	return (
 		<div className='App'>
-			<nav>
-				<h1>Nerdle</h1>
-			</nav>
-
 			<AppContext.Provider
 				value={{
-					board,
-					setBoard,
 					attempt,
-					setAttempt,
+					board,
+					disabled,
+					gameOver,
+					isOpen,
 					onDelete,
 					onEnter,
 					onLetterSelect,
-					solutionSet,
-					disabled,
+					setAttempt,
+					setBoard,
 					setDisabled,
-					gameOver,
 					setGameOver,
-          solution,
-          setSolution
+					setIsOpen,
+					setSolution,
+					solution,
+					solutionSet,
 				}}
 			>
+				<nav>
+					<h1>Nerdle</h1>
+				</nav>
+
 				<div className='game'>
 					<Board />
+					<div className='stats'>
+						<StatisticsButton />
+					</div>
 					{gameOver.isGameOver ? <GameOver /> : <Keyboard />}
-					{/* {gameOver.isGameOver ? alert("GAME OVER") : <Keyboard />} */}
 				</div>
 			</AppContext.Provider>
 		</div>
