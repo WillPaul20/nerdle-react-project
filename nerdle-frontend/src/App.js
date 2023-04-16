@@ -23,13 +23,17 @@ function App() {
 		guessedWord: false,
 	});
 	const [isOpen, setIsOpen] = useState(false);
-	const [gamesPlayed, setGamesPlayed] = useState(0);
-    const [gamesWon, setGamesWon] = useState(0);
+	const [gamesPlayed, setGamesPlayed] = useState(() => {
+		const storedGamesPlayed = parseInt(localStorage.getItem('gamesPlayed'));
+		return isNaN(storedGamesPlayed) ? 0 : storedGamesPlayed;});
+    const [gamesWon, setGamesWon] = useState(() => {
+		const storedGamesWon = parseInt(localStorage.getItem('gamesWon'));
+		return isNaN(storedGamesWon) ? 0 : storedGamesWon;});
   
     useEffect(() => {
       // Write to sessionStorage whenever gamesPlayed or gamesWon change
-      sessionStorage.setItem('gamesPlayed', gamesPlayed.toString());
-      sessionStorage.setItem('gamesWon', gamesWon.toString());
+      localStorage.setItem('gamesPlayed', gamesPlayed.toString());
+      localStorage.setItem('gamesWon', gamesWon.toString());
     }, [gamesPlayed, gamesWon]);
 
 	useEffect(() => {
