@@ -1,34 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../App";
 import { FaChartBar } from 'react-icons/fa';
 
 const StatisticsButton = () => {
-    const { isOpen, setIsOpen } = useContext(AppContext);
-    const [gamesPlayed, setGamesPlayed] = useState(0);
-    const [gamesWon, setGamesWon] = useState(0);
-  
-    useEffect(() => {
-      // Read from sessionStorage on mount
-      const played = sessionStorage.getItem('gamesPlayed');
-      const won = sessionStorage.getItem('gamesWon');
-  
-      if (played) {
-        setGamesPlayed(parseInt(played));
-      }
-  
-      if (won) {
-        setGamesWon(parseInt(won));
-      }
-    }, []);
+    const { isOpen, setIsOpen, gamesPlayed, gamesWon } = useContext(AppContext);
 
     const handleClick = () => {
       setIsOpen(true);
     };
   
     const closeModal = () => {
-      // Write to sessionStorage before closing
-      sessionStorage.setItem('gamesPlayed', gamesPlayed.toString());
-      sessionStorage.setItem('gamesWon', gamesWon.toString());
       setIsOpen(false);
     };
 

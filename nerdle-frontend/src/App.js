@@ -23,6 +23,14 @@ function App() {
 		guessedWord: false,
 	});
 	const [isOpen, setIsOpen] = useState(false);
+	const [gamesPlayed, setGamesPlayed] = useState(0);
+    const [gamesWon, setGamesWon] = useState(0);
+  
+    useEffect(() => {
+      // Write to sessionStorage whenever gamesPlayed or gamesWon change
+      sessionStorage.setItem('gamesPlayed', gamesPlayed.toString());
+      sessionStorage.setItem('gamesWon', gamesWon.toString());
+    }, [gamesPlayed, gamesWon]);
 
 	useEffect(() => {
 		wordSetGenerator().then((words) => {
@@ -52,11 +60,14 @@ function App() {
 
 		if (currentWord.toLowerCase() === solution) {
 			setGameOver({ isGameOver: true, guessedWord: true });
+			setGamesPlayed(gamesPlayed + 1);
+			setGamesWon(gamesWon + 1);
 			return;
 		}
 
 		if (attempt.attemptNumber === 5) {
 			setGameOver({ isGameOver: true, guessedWord: false });
+			setGamesPlayed(gamesPlayed + 1);
 			return;
 		}
 	};
@@ -94,6 +105,8 @@ function App() {
 					board,
 					disabled,
 					gameOver,
+					gamesPlayed,
+					gamesWon,
 					isOpen,
 					onDelete,
 					onEnter,
@@ -102,6 +115,8 @@ function App() {
 					setBoard,
 					setDisabled,
 					setGameOver,
+					setGamesPlayed,
+					setGamesWon,
 					setIsOpen,
 					setSolution,
 					solution,
