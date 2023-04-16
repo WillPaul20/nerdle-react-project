@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { AppContext } from "../App";
+import React from "react";
 import Letter from "./Letter";
 
 function Board() {
@@ -54,7 +53,6 @@ function Board() {
 				<Letter letterPosition={4} attemptValue={5} /> 
 				<Letter letterPosition={5} attemptValue={5} /> 
 			</div>
-
 		</div>
 	);
 }
