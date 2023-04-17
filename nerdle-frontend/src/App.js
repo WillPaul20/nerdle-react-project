@@ -4,6 +4,7 @@ import Keyboard from "./components/Keyboard";
 import GameOver from "./components/GameOver";
 import React, { createContext, useEffect, useState } from "react";
 import { boardDefault, wordSetGenerator } from "./Words";
+import { getCookie, setCookie } from "./components/Cookie";
 import StatisticsButton from "./components/StatisticsButton";
 
 // Allow states to be passed throughout the application using context API
@@ -24,17 +25,21 @@ function App() {
 	});
 	const [isOpen, setIsOpen] = useState(false);
 	const [gamesPlayed, setGamesPlayed] = useState(() => {
-		const storedGamesPlayed = parseInt(localStorage.getItem('gamesPlayed'));
-		return isNaN(storedGamesPlayed) ? 0 : storedGamesPlayed;});
-    const [gamesWon, setGamesWon] = useState(() => {
-		const storedGamesWon = parseInt(localStorage.getItem('gamesWon'));
-		return isNaN(storedGamesWon) ? 0 : storedGamesWon;});
-  
-    useEffect(() => {
-      // Write to sessionStorage whenever gamesPlayed or gamesWon change
-      localStorage.setItem('gamesPlayed', gamesPlayed.toString());
-      localStorage.setItem('gamesWon', gamesWon.toString());
-    }, [gamesPlayed, gamesWon]);
+		const storedGamesPlayed = parseInt(localStorage.getItem("gamesPlayed"));
+		return isNaN(storedGamesPlayed) ? 0 : storedGamesPlayed;
+	});
+	const [gamesWon, setGamesWon] = useState(() => {
+		const storedGamesWon = parseInt(localStorage.getItem("gamesWon"));
+		return isNaN(storedGamesWon) ? 0 : storedGamesWon;
+	});
+	const lastPlayed = getCookie("lastPlayed");
+	const today = new Date().toDateString();
+
+	useEffect(() => {
+		// Write to sessionStorage whenever gamesPlayed or gamesWon change
+		localStorage.setItem("gamesPlayed", gamesPlayed.toString());
+		localStorage.setItem("gamesWon", gamesWon.toString());
+	}, [gamesPlayed, gamesWon]);
 
 	useEffect(() => {
 		wordSetGenerator().then((words) => {
@@ -66,12 +71,14 @@ function App() {
 			setGameOver({ isGameOver: true, guessedWord: true });
 			setGamesPlayed(gamesPlayed + 1);
 			setGamesWon(gamesWon + 1);
+			setCookie("lastPlayed", today, 1);
 			return;
 		}
 
 		if (attempt.attemptNumber === 5) {
 			setGameOver({ isGameOver: true, guessedWord: false });
 			setGamesPlayed(gamesPlayed + 1);
+			setCookie("lastPlayed", today, 1);
 			return;
 		}
 	};
@@ -101,6 +108,7 @@ function App() {
 		// Set the attempt letter position to the next letter
 		setAttempt({ ...attempt, letterPosition: attempt.letterPosition + 1 });
 	};
+
 	return (
 		<div className='App'>
 			<AppContext.Provider
@@ -136,7 +144,7 @@ function App() {
 					<div className='stats'>
 						<StatisticsButton />
 					</div>
-					{gameOver.isGameOver ? <GameOver /> : <Keyboard />}
+					{gameOver.isGameOver || lastPlayed === today ? <GameOver lastPlayed={lastPlayed} today={today} /> : <Keyboard />}
 				</div>
 			</AppContext.Provider>
 		</div>
