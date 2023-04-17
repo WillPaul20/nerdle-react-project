@@ -15,7 +15,7 @@ const getWords = async () => {
 	// const data = await response.json();
 
 	const listOfWords = [];
-	await fetch('http://localhost:8000/api/getAllWords')
+	await fetch('/api/getAllWords')
 	.then((response) => response.json())
 	.then(data =>  {
 		data.forEach((word) => {
@@ -30,7 +30,7 @@ export const wordSetGenerator = async () => {
 	let wordSet = new Set();
 	let todaysWord;
 	const wordList = await getWords();
-	await fetch('http://localhost:8000/api/getRandomWord')
+	await fetch('/api/getRandomWord')
 		.then((response) => response.json())
 		.then(data =>  {
 			todaysWord = data[0].word;
