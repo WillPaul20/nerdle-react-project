@@ -8,7 +8,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_CONNECT + "/nerdleDB");
+mongoose.connect('mongodb+srv://DBConnection:abawDhzO4jW6Ly1s@serversideproject.ekr3df0.mongodb.net');
 
 const app = express();
 const port = 8000;
@@ -40,7 +40,7 @@ app.get("/api/getRandomWord", async (req, res) => {
 	const lastPulled = req.cookies.lastPulled;
 	const wordOfLastPulled = req.cookies.wordOfLastPulled;
 
-	const client = new MongoClient(process.env.MONGO_CONNECT);
+	const client = new MongoClient('mongodb+srv://DBConnection:abawDhzO4jW6Ly1s@serversideproject.ekr3df0.mongodb.net');
 
 	await client.connect();
 
@@ -68,7 +68,7 @@ app.get("/api/getRandomWord", async (req, res) => {
 
 app.get("/api/getAllWords", async (req, res) => {
 	//res.json(movieData)
-	const client = new MongoClient(process.env.MONGO_CONNECT);
+	const client = new MongoClient('mongodb+srv://DBConnection:abawDhzO4jW6Ly1s@serversideproject.ekr3df0.mongodb.net');
 
 	await client.connect();
 
