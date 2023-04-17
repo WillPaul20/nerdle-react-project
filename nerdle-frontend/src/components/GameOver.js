@@ -9,7 +9,7 @@ function GameOver() {
 			<h3>
 				{gameOver.guessedWord
 					? "You have answered the Nerdle correctly!"
-					: "Sorry, that's incorrect!"}
+					: "Try again tomorrow!"}
 			</h3>
 			<h1>Correct: {solution.toUpperCase()}</h1>
 			{gameOver.guessedWord && (
